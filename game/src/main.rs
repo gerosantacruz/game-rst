@@ -211,6 +211,11 @@ fn create_board_system(
             Tile::from_type(TileType::Brown2),
         ],
     ];
+const HALF_TILE_SIZE: f32 = TILE_SIZE / 2.0;
+const HALF_BATTLEFIELD_WIDTH_IN_PIXELS: f32 = BATTLEFIELD_WIDTH_IN_TILES as f32 * TILE_SIZE / 2.0;
+const HALF_BATTLEFIELD_HEIGTH_IN_PIXELS: f32 = BATTLEFIELD_HEIGHT_IN_TILES as f32 * TILE_SIZE / 2.0;
+const WIDTH_CENTER_OFFSET: f32 = HALF_BATTLEFIELD_HEIGTH_IN_PIXELS - HALF_TILE_SIZE;
+const HEIGHT_CENTER_OFFSET: f32 = HALF_BATTLEFIELD_HEIGTH_IN_PIXELS - HALF_TILE_SIZE;
 
     for (y, row) in tile_map.iter().enumerate() {
         for (x, col) in row.iter().enumerate() {
@@ -219,8 +224,8 @@ fn create_board_system(
                 sprite: TextureAtlasSprite::new(col.index),
                 transform: Transform {
                     translation: Vec3 {
-                        x: x as f32 * TILE_SIZE * SCALE,
-                        y: y as f32 * TILE_SIZE * SCALE,
+                        x: SCALE * (x as f32 * TILE_SIZE - WIDTH_CENTER_OFFSET),
+                        y: SCALE * (y as f32 * TILE_SIZE - HEIGHT_CENTER_OFFSET),
                         z: 0.0,
                     },
                     scale: Vec3::splat(SCALE),
